@@ -11,7 +11,7 @@ lego \
     --path="/.lego" \
     --server="${LEGO_SERVER:=https://acme-v01.api.letsencrypt.org/directory}" \
     --email="${EMAIL}" \
-    --domains="${DOMAINS}" \
+    --domains=${DOMAINS} \
     --dns="route53" \
     --days="${RENEW_DAYS:="30"}" \
     renew 

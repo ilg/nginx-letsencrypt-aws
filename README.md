@@ -11,7 +11,7 @@ This is not at all complete yet.  Don't use it.  Really, just don't.  Maybe it'l
 The container expects:
 
 - `EMAIL` to tell it what email address to use with Let's Encrypt
-- `DOMAINS` to tell it for which domain(s) to get/renew the certificate
+- `DOMAINS` to tell it for which domain(s) to get/renew the certificate (multiple should be specified like `DOMAINS="example.com --domain=www.example.com --domain=secure.example.com"`
 - `S3LEGO` to tell it the S3 URL to which to sync the `.lego` directory
 - whatever AWS variables are necessary for the S3 syncing and for lego to work with Route53 (typically `AWS_REGION`, `AWS_ACCESS_KEY_ID`, and `AWS_SECRET_ACCESS_KEY`)
 

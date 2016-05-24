@@ -5,14 +5,19 @@ mkdir -p /.lego
 # pull down the lego directory from S3
 aws s3 sync "${S3LEGO}" /.lego
 
-# issue the certificate
-#lego \
-    #--path="/.lego" \
-    #--server="${LEGO_SERVER:=https://acme-v01.api.letsencrypt.org/directory}" \
-    #--email="${EMAIL}" \
-    #--domains="${DOMAINS}" \
-    #--dns="route53" \
-    #run 
+PRIMARY_DOMAIN=${DOMAINS%% *}
 
-# send the lego directory up to S3
-# aws s3 sync /.lego "${S3LEGO}" 
+# If the cert/key don't exist...
+if [ ! -f "/.lego/certificates/${PRIMARY_DOMAIN}.crt" ] || [ ! -f "/.lego/certificates/${PRIMARY_DOMAIN}.key" ]; then
+    # issue the certificate
+    lego \
+        --path="/.lego" \
+        --server="${LEGO_SERVER:=https://acme-v01.api.letsencrypt.org/directory}" \
+        --email="${EMAIL}" \
+        --domains=${DOMAINS} \
+        --dns="route53" \
+        run 
+
+    # send the lego directory up to S3
+    aws s3 sync /.lego "${S3LEGO}" 
+fi
