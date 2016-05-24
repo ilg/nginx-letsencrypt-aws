@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv /bin/sh
+
+hash_certs() {
+    find /.lego/certificates \
+        -type f \
+        -exec python -sBc "import hashlib;print hashlib.md5(open('{}','rb').read()).hexdigest()" \;
+}
+PRE_HASH=$(hash_certs)
+
+lego --path="/.lego" --email="${EMAIL}" --domains="${DOMAINS}" --dns="route53" renew --days="${RENEW_DAYS:="30"}"
+
+if [ "${PRE_HASH}" = "$(hash_certs)" ]; then
+    echo "Certificate is still valid for at least ${RENEW_DAYS} days."
+    exit 0
+fi
+
+# Certificate(s) have changed, so push to S3...
+aws s3 sync /.lego "${S3LEGO}"
+
+# ... and make nginx reload.
+killall -HUP nginx

@@ -1,7 +1,5 @@
 #!/usr/bin/with-contenv /bin/sh
 
-env
-
 mkdir -p /.lego
 
 # pull down the lego directory from S3
@@ -9,7 +7,6 @@ aws s3 sync "${S3LEGO}" /.lego
 
 # issue the certificate
 # lego --email="${EMAIL}" --domains="${DOMAINS}" --dns="route53" run
-# s/run/renew --days=30/ to renew
 
 # send the lego directory up to S3
 # aws s3 sync /.lego "${S3LEGO}" 
