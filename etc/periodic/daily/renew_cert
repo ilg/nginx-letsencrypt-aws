@@ -7,7 +7,14 @@ hash_certs() {
 }
 PRE_HASH=$(hash_certs)
 
-lego --path="/.lego" --email="${EMAIL}" --domains="${DOMAINS}" --dns="route53" renew --days="${RENEW_DAYS:="30"}"
+lego \
+    --path="/.lego" \
+    --server="${LEGO_SERVER:=https://acme-v01.api.letsencrypt.org/directory}" \
+    --email="${EMAIL}" \
+    --domains="${DOMAINS}" \
+    --dns="route53" \
+    --days="${RENEW_DAYS:="30"}" \
+    renew 
 
 if [ "${PRE_HASH}" = "$(hash_certs)" ]; then
     echo "Certificate is still valid for at least ${RENEW_DAYS} days."

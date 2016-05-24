@@ -6,7 +6,13 @@ mkdir -p /.lego
 aws s3 sync "${S3LEGO}" /.lego
 
 # issue the certificate
-# lego --email="${EMAIL}" --domains="${DOMAINS}" --dns="route53" run
+#lego \
+    #--path="/.lego" \
+    #--server="${LEGO_SERVER:=https://acme-v01.api.letsencrypt.org/directory}" \
+    #--email="${EMAIL}" \
+    #--domains="${DOMAINS}" \
+    #--dns="route53" \
+    #run 
 
 # send the lego directory up to S3
 # aws s3 sync /.lego "${S3LEGO}" 
