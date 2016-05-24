@@ -1,4 +1,4 @@
-# nginx-letcencrypt-aws
+# nginx-letsencrypt-aws
 
 Docker image to run [nginx](http://nginx.org/) with automatic [Let's Encrypt](https://letsencrypt.org/) certificate management, verifying through Route53 and storing on S3.
 
