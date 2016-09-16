@@ -5,9 +5,9 @@ ADD https://github.com/just-containers/s6-overlay/releases/download/v1.11.0.1/s6
 RUN gunzip -c /tmp/s6-overlay-amd64.tar.gz | tar -xf - -C /
 ENTRYPOINT ["/init"]
 
-RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+RUN echo "@edge-community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 RUN apk update \
-    && apk add --no-cache python py-pip groff lego@testing
+    && apk add --no-cache python py-pip groff lego@edge-community
 
 # These requirements for awscli caused the install to fail if attempted after upgrading pip (and there are other requirements that caused the install to fail if attempted before upgrading pip).
 RUN pip install 'rsa<=3.3.0,>=3.1.2' six
