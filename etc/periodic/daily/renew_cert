@@ -14,7 +14,8 @@ lego \
     --domains=${DOMAINS} \
     --dns="route53" \
     renew \
-    --days="${RENEW_DAYS:="30"}"
+    --days="${RENEW_DAYS:="30"}" \
+    || exit 1
 
 if [ "${PRE_HASH}" = "$(hash_certs)" ]; then
     echo "Certificate is still valid for at least ${RENEW_DAYS} days."
