@@ -7,7 +7,7 @@ ENTRYPOINT ["/init"]
 
 RUN echo "@edge-community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 RUN apk update \
-    && apk add --no-cache python py-pip groff lego@edge-community
+    && apk add --no-cache python3 py-pip groff lego@edge-community
 
 # These requirements for awscli caused the install to fail if attempted after upgrading pip (and there are other requirements that caused the install to fail if attempted before upgrading pip).
 RUN pip install 'rsa<=3.3.0,>=3.1.2' six
