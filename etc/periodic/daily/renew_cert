@@ -3,13 +3,13 @@
 hash_certs() {
     find /.lego/certificates \
         -type f \
-        -exec python -sBc "import hashlib;print hashlib.md5(open('{}','rb').read()).hexdigest()" \;
+        -exec md5sum "{}" \;
 }
 PRE_HASH=$(hash_certs)
 
 lego \
     --path="/.lego" \
-    --server="${LEGO_SERVER:=https://acme-v01.api.letsencrypt.org/directory}" \
+    --server="${LEGO_SERVER:=https://acme-v02.api.letsencrypt.org/directory}" \
     --email="${EMAIL}" \
     --domains=${DOMAINS} \
     --dns="route53" \
